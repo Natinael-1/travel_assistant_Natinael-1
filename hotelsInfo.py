@@ -1,6 +1,7 @@
 #Importing requests and os libraries to make request and access env variable respectively
 import requests
 import os
+import time
 url_list = "https://apidojo-booking-v1.p.rapidapi.com/properties/v2/list"
 url_getroom = "https://apidojo-booking-v1.p.rapidapi.com/properties/v2/get-rooms"
 RAPID_BOOKING_API_KEY = os.getenv("RAPID_BOOKING_API_KEY")
@@ -39,9 +40,11 @@ def hotel_finder(search_type):
     }
     response = requests.get(url_list, headers=headers, params=querystring)
     response_dic = response.json()
-    hotels = response_dic.get("result", [])
+    hotels = response_dic.get("result", {})
 
     print(f"\n\t\t====Details of hotels in the \"{search_type}\"===")
+    time.sleep(4)
+    print('Finding hotel for you-----')
     if hotels:
         for ciho in hotels:
             if ciho.get("type") == "banner":
@@ -60,7 +63,8 @@ def hotel_finder(search_type):
                 print(f"\t\tCurrency: {price.get('currency', 'N/A')}")
                 print("=====================================================")
     else:
-        print("\t\t❌ No Hotels Found")
+        print("\t\t❌ No Hotels Found. Check your input or issue occured server side")
+
 def get_rooms():
     room_querystring = {}
     headers = {
@@ -103,14 +107,14 @@ def get_rooms():
 
                     print("------------------------------------------")
 
-    elif room_response.status_code == 204:
+    """elif room_response.status_code == 204:
         print("\t\tMissing or invalid parameters.")
     elif room_response.status_code == 302:
         print("\t\tReached page but response is empty or redirected.")
     elif room_response.status_code == 400:
         print("\t\tBad input parameter.")
     elif room_response.status_code == 403:
-        print("\t\tAccess denied due to bot protection on server.")
+        print("\t\tAccess denied due to bot protection on server.")"""
 
     
 

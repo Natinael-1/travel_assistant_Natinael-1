@@ -1,11 +1,14 @@
 import requests
 import os
+import time
 
 url_endpt = "https://apidojo-booking-v1.p.rapidapi.com/locations/auto-complete"
 RAPID_BOOKING_API_KEY = os.getenv("RAPID_BOOKING_API_KEY")
 
 def displayCityInfo():
     destination_city = input("\t\t🏢 City you want to travel to: ")
+    time.sleep(3)
+    print("Finding destination city--------")
 
     query_dic = {
         "text": destination_city,
@@ -21,7 +24,6 @@ def displayCityInfo():
 
     if response.status_code == 200:
         response_list = response.json()
-
         # Find the first CITY result
         city_item = []
         district_item = []
@@ -71,14 +73,17 @@ def displayCityInfo():
                 print("=============================================================\n")
         else:
             print("\t\t❌ No airport found.")
-
-    elif response.status_code == 204:
+    """elif response.status_code == "204":
         print("\t\tMissing or invalid parameters.")
-    elif response.status_code == 302:
+    elif response.status_code == "202":
         print("\t\tReached page but response is empty or redirected.")
-    elif response.status_code == 400:
+    elif response.status_code == "400":
         print("\t\tBad input parameter.")
-    elif response.status_code == 403:
+    elif response.status_code == "403":
         print("\t\tAccess denied due to bot protection on server.")
+    elif response_list.get("code") == "500":
+        print(f"\t\tOoops! Internal server error occured")"""
+  
+
 
 
