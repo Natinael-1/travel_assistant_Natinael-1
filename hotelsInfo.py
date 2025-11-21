@@ -97,6 +97,10 @@ def get_rooms():
                         for bed_detail in bed_info:
                             print(f"\t\tBed description: {bed_detail.get('description', 'N/A')}")
                             print(f"\t\tNumber of beds: {bed_detail.get('name_with_count', 'N/A')}")
+                    image = room_details.get("photos", [])
+                    for image_detail in image:
+                        print(f"Photo_URL: {image_detail.get('url_original', 'N/A')}")
+
                     print("------------------------------------------")
 
     elif room_response.status_code == 204:
@@ -107,7 +111,7 @@ def get_rooms():
         print("\t\tBad input parameter.")
     elif room_response.status_code == 403:
         print("\t\tAccess denied due to bot protection on server.")
-get_rooms()
+
     
 
 
