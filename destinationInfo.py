@@ -5,7 +5,7 @@ url_endpt = "https://apidojo-booking-v1.p.rapidapi.com/locations/auto-complete"
 RAPID_BOOKING_API_KEY = os.getenv("RAPID_BOOKING_API_KEY")
 
 def displayCityInfo():
-    destination_city = input("🏢 City you want to travel to: ")
+    destination_city = input("\t\t🏢 City you want to travel to: ")
 
     query_dic = {
         "text": destination_city,
@@ -36,49 +36,49 @@ def displayCityInfo():
         #Print city if exists
         if city_item:
             for city in city_item:
-                print(f"\n================== Details about \"{destination_city}\" ====================")
-                print(f"Destination Found: {city['label']}")
-                print(f"Country: {city['country']}")
-                print(f"Region: {city['region']}")
-                print(f"Timezone: {city['timezone']}")
-                print(f"Hotels Available: {city['nr_hotels']}")
-                print(f"Destination ID: {city['dest_id']}")
+                print(f"\n\t\t================== Details about \"{destination_city}\" ====================")
+                print(f"\t\tDestination Found: {city['label']}")
+                print(f"\t\tCountry: {city['country']}")
+                print(f"\t\tRegion: {city['region']}")
+                print(f"\t\tTimezone: {city['timezone']}")
+                print(f"\t\tHotels Available: {city['nr_hotels']}")
+                print(f"\t\tDestination ID: {city['dest_id']}")
                 print("=============================================================\n")
         else:
-            print("❌ No city found.")
+            print("\t\t❌ No city found.")
         if district_item:
             for district in district_item:
-                print(f"\n===========Details about district of {destination_city}============")
-                print(f"District Found: {district['label']}")
-                print(f"Country: {district['country']}")
-                print(f"Region: {district['region']}")
-                print(f"Timezone: {district['timezone']}")
-                print(f"Hotels Available: {district['nr_hotels']}")
-                print(f"Destination ID: {district['dest_id']}")
+                print(f"\n\t\t===========Details about district of {destination_city}============")
+                print(f"\t\tDistrict Found: {district['label']}")
+                print(f"\t\tCountry: {district['country']}")
+                print(f"\t\tRegion: {district['region']}")
+                print(f"\t\tTimezone: {district['timezone']}")
+                print(f"\t\tHotels Available: {district['nr_hotels']}")
+                print(f"\t\tDestination ID: {district['dest_id']}")
                 print("=============================================================\n")
         else:
-            print("❌ No district found.")
+            print("\t\t❌ No district found.")
 
         if airport_item:
             for airport in airport_item:
-                print(f"\n===========Details about airport in {destination_city} ============")
-                print(f"Airport Found: {airport['label']}")
-                print(f"Country: {airport['country']}")
-                print(f"Region: {airport['region']}")
-                print(f"Timezone: {airport['timezone']}")
-                print(f"Hotels Available: {airport['nr_hotels']}")
-                print(f"Destination ID: {airport['dest_id']}")
+                print(f"\n\t\t===========Details about airport in {destination_city} ============")
+                print(f"\t\tAirport Found: {airport['label']}")
+                print(f"\t\tCountry: {airport['country']}")
+                print(f"\t\tRegion: {airport['region']}")
+                print(f"\t\tTimezone: {airport['timezone']}")
+                print(f"\t\tHotels Available: {airport['nr_hotels']}")
+                print(f"\t\tDestination ID: {airport['dest_id']}")
                 print("=============================================================\n")
         else:
-            print("❌ No airport found.")
+            print("\t\t❌ No airport found.")
 
     elif response.status_code == 204:
-        print("Missing or invalid parameters.")
+        print("\t\tMissing or invalid parameters.")
     elif response.status_code == 302:
-        print("Reached page but response is empty or redirected.")
+        print("\t\tReached page but response is empty or redirected.")
     elif response.status_code == 400:
-        print("Bad input parameter.")
+        print("\t\tBad input parameter.")
     elif response.status_code == 403:
-        print("Access denied due to bot protection on server.")
+        print("\t\tAccess denied due to bot protection on server.")
 
 

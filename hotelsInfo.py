@@ -2,6 +2,7 @@
 import requests
 import os
 url_list = "https://apidojo-booking-v1.p.rapidapi.com/properties/v2/list"
+url_getroom = "https://apidojo-booking-v1.p.rapidapi.com/properties/v2/get-rooms"
 RAPID_BOOKING_API_KEY = os.getenv("RAPID_BOOKING_API_KEY")
 
 def hotel_finder(search_type):
@@ -48,6 +49,7 @@ def hotel_finder(search_type):
             else:
                 print(f"\t\tHotel Name: {ciho['hotel_name']}")
                 print(f"\t\tHotel Id: {ciho['hotel_id']}")
+                print(f"\t\tSearch Id: {ciho.get('search_ids', 'N/A')}")
                 print(f"\t\tAddress: {ciho.get('address','N/A')}")
                 print(f"\t\tRating: {ciho.get('review_score', 'N/A')}")
                 print(f"\t\tReview Count: {ciho.get('review_nr', 'N/A')}")
@@ -59,8 +61,56 @@ def hotel_finder(search_type):
                 print("=====================================================")
     else:
         print("\t\t❌ No Hotels Found")
+def get_rooms():
+    room_querystring = {}
+    headers = {
+	"x-rapidapi-key": RAPID_BOOKING_API_KEY,
+	"x-rapidapi-host": "apidojo-booking-v1.p.rapidapi.com"
+    }
 
+    hotel_id = input("\t\tHotel Id: ")
+    departure_date = input("\t\tDeparture date: ")
+    arrival_date = input("\t\tArrival date: ")
+    rec_guest_qty = input("\t\tGuest quantity: ")
+    rec_room_qty = input("\t\tRoom quantity: ")
+    room_querystring.update({"hotel_id": hotel_id, "departure_date": departure_date, "arrival_date": arrival_date, "rec_guest_qty":rec_guest_qty, "rec_room_qty":rec_room_qty})
+
+    room_response = requests.get(url_getroom, headers=headers, params=room_querystring)
+    if room_response.status_code == 200:
+        room_response = room_response.json()
+        for room_deta in room_response:
+            room = room_deta.get("rooms")
+            if isinstance(room, dict):     
+                for room_type, room_details in room.items():
+                    print("=========================================================")
+                    print(f"\t\tRoom type Id: {room_type}")
+                    room_details_value = room_details.get("facilities",[])
+                    for facility in room_details_value:
+                        print(f"\t\tRoom ID: {facility.get('id', 'N/A')}")
+                        print(f"\t\tName: {facility.get('name', 'N/A')}")
+                        print(f"\t\tFacility description: {facility.get('alt_facilitytype_name', 'N/A')}")
+                        print(f"-------------------------------")                   
+                    print(f"\t\tDescription: {room_details.get('description', 'N/A')}")
+                    bed_desc = room_details.get("bed_configurations", [])
+                    for bed in bed_desc:
+                        bed_info = bed.get('bed_types', [])
+                        for bed_detail in bed_info:
+                            print(f"\t\tBed description: {bed_detail.get('description', 'N/A')}")
+                            print(f"\t\tNumber of beds: {bed_detail.get('name_with_count', 'N/A')}")
+                    print("------------------------------------------")
+
+    elif room_response.status_code == 204:
+        print("\t\tMissing or invalid parameters.")
+    elif room_response.status_code == 302:
+        print("\t\tReached page but response is empty or redirected.")
+    elif room_response.status_code == 400:
+        print("\t\tBad input parameter.")
+    elif room_response.status_code == 403:
+        print("\t\tAccess denied due to bot protection on server.")
+get_rooms()
     
+
+
 
 
         
