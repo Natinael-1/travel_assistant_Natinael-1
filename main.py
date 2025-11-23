@@ -1,40 +1,63 @@
-#Here is the main python file
+from flask import Flask, request, Response
+import sys
+import os
+import io
+from contextlib import redirect_stdout
+
+# Import your modules
 import destinationInfo
 import hotelsInfo
-def main():
-    while True:
-        print("\n\t\t🙋🙋Welcome to Your Travel Assistant  🙋‍♀️🙋‍♀️")
-        print("\t\t===Please what can I help you?===.")
-        print("\n\t\t1) Choose destination city\n\t\t2) Search for hotels or get details\n\t\t3) Exit")
-        choice = input("\t\tPlease enter your choice: ")
-        if choice == "1":
-            destinationInfo.displayCityInfo()
-        elif choice == "2":
-            while True:
-                print("\n\t\t====Search for hotels by: =====")
-                print("\t\t1) City\n\t\t2) District\n\t\t3) Airport\n\t\t4) Get a hotel detail" \
-                "\n\t\t5) Get room detail in hotel\n\t\t6) Back")
-                sear_type = input("\t\tInput the search type(should match destination id): ")
-                if sear_type == "1":
-                    hotelsInfo.hotel_finder("city")
-                elif sear_type =="2":
-                    hotelsInfo.hotel_finder("district")
-                elif sear_type == "3":
-                    hotelsInfo.hotel_finder("airport")
-                elif sear_type =="4":
-                    hotelsInfo.get_sing_hotl()
-                elif sear_type == "5":
-                    hotelsInfo.get_rooms()
-                elif sear_type =="6":
-                    break
-                else:
-                    print("\t\tPlease input valid choice")
-                    continue
 
-        elif choice == "3":
-            break
-        else:
-            print("\t\tInvalid choice. Try again!")
-            continue
-main()
+app = Flask(__name__)
 
+# This helper function captures your CLI print statements
+def capture_cli_output(func, *args):
+    f = io.StringIO()
+    with redirect_stdout(f):
+        try:
+            func(*args)
+        except Exception as e:
+            print(f"Error executing function: {e}")
+    return f.getvalue()
+
+@app.route('/')
+def home():
+    # Only showing basic instructions here
+    return """
+    <pre>
+    Welcome to the Travel Assistant CLI (Web Version)
+    
+    Available Commands (Use these URLs):
+    1. Check City:   /city?name=London
+    2. Check Hotels: /hotels?type=city&dest_id=-3712125&arrival=2025-11-27&departure=2025-11-29
+    </pre>
+    """
+
+@app.route('/city')
+def city_route():
+    city_name = request.args.get('name')
+    if not city_name:
+        return "<pre>Error: Please add ?name=CityName to the URL</pre>"
+    
+    # Run your function and capture the output
+    output = capture_cli_output(destinationInfo.getCityInfo, city_name)
+    
+    # Return as plain text to keep your formatting
+    return Response(output, mimetype='text/plain')
+
+@app.route('/hotels')
+def hotels_route():
+    # Get parameters from URL
+    s_type = request.args.get('type', 'city')
+    d_id = request.args.get('dest_id')
+    arr = request.args.get('arrival')
+    dep = request.args.get('departure')
+    
+    if not d_id or not arr or not dep:
+        return "<pre>Error: Missing parameters. Need dest_id, arrival, and departure.</pre>"
+        
+    output = capture_cli_output(hotelsInfo.hotel_finder, s_type, d_id, arr, dep)
+    return Response(output, mimetype='text/plain')
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
