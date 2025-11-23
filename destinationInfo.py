@@ -6,9 +6,9 @@ url_endpt = "https://apidojo-booking-v1.p.rapidapi.com/locations/auto-complete"
 RAPID_BOOKING_API_KEY = os.getenv("RAPID_BOOKING_API_KEY")
 
 def displayCityInfo():
-    destination_city = input("\t\t🏢 City you want to travel to: ")
+    destination_city = input("\t\t🏢 City you want to travel to or check(London): ")
+    print("Finding destination details--------")
     time.sleep(3)
-    print("Finding destination city--------")
 
     query_dic = {
         "text": destination_city,
@@ -39,7 +39,7 @@ def displayCityInfo():
         if city_item:
             for city in city_item:
                 print(f"\n\t\t================== Details about \"{destination_city}\" ====================")
-                print(f"\t\tDestination Found: {city['label']}")
+                print(f"\t\tCity Found: {city['label']}")
                 print(f"\t\tCountry: {city['country']}")
                 print(f"\t\tRegion: {city['region']}")
                 print(f"\t\tTimezone: {city['timezone']}")
@@ -73,16 +73,8 @@ def displayCityInfo():
                 print("=============================================================\n")
         else:
             print("\t\t❌ No airport found.")
-    """elif response.status_code == "204":
-        print("\t\tMissing or invalid parameters.")
-    elif response.status_code == "202":
-        print("\t\tReached page but response is empty or redirected.")
-    elif response.status_code == "400":
-        print("\t\tBad input parameter.")
-    elif response.status_code == "403":
-        print("\t\tAccess denied due to bot protection on server.")
-    elif response_list.get("code") == "500":
-        print(f"\t\tOoops! Internal server error occured")"""
+    else:
+        print("\t\t❌ Oops! Request is not successful.")
   
 
 

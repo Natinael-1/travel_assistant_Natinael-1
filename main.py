@@ -14,7 +14,7 @@ def main():
                 print("\n\t\t====Search for hotels by: =====")
                 print("\t\t1) City\n\t\t2) District\n\t\t3) Airport\n\t\t4) Get a hotel detail" \
                 "\n\t\t5) Get room detail in hotel\n\t\t6) Back")
-                sear_type = input("\t\tInput the search type: ")
+                sear_type = input("\t\tInput the search type(should match destination id): ")
                 if sear_type == "1":
                     hotelsInfo.hotel_finder("city")
                 elif sear_type =="2":
