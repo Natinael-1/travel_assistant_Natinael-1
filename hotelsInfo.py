@@ -4,6 +4,8 @@ import os
 import time
 url_list = "https://apidojo-booking-v1.p.rapidapi.com/properties/v2/list"
 url_getroom = "https://apidojo-booking-v1.p.rapidapi.com/properties/v2/get-rooms"
+url_single_hotl = "https://apidojo-booking-v1.p.rapidapi.com/properties/detail"
+url_filter = "https://apidojo-booking-v1.p.rapidapi.com/filters/list"
 RAPID_BOOKING_API_KEY = os.getenv("RAPID_BOOKING_API_KEY")
 
 def hotel_finder(search_type):
@@ -115,6 +117,60 @@ def get_rooms():
         print("\t\tBad input parameter.")
     elif room_response.status_code == 403:
         print("\t\tAccess denied due to bot protection on server.")"""
+def get_sing_hotl():
+    querystring_hotel = {}
+    headers = {
+	"x-rapidapi-key": RAPID_BOOKING_API_KEY,
+	"x-rapidapi-host": "apidojo-booking-v1.p.rapidapi.com"
+    }
+    arrival_date = input("\t\tArrival date(yyyy-mm-dd): ")
+    departure_date = input("\t\tDeparture date(yyyy-mm-dd): ")
+    hotel_id = input("\t\tHotel Id or check(224649): ")
+    search_id = input("\t\tSearch Id or check(property_card_224649): ")
+    rec_guest_qty = input("\t\tGuest number: ")
+    rec_room_qty = input("\t\tRoom number: ")
+    querystring_hotel.update({"arrival_date": arrival_date, 
+                              "departure_date": departure_date,
+                              "hotel_id": hotel_id,
+                              "search_id": search_id,
+                              "rec_guest_qty": rec_guest_qty,
+                              "rec_room_qty": rec_room_qty})
+    response = requests.get(url_single_hotl, headers=headers, params=querystring_hotel)
+    if response.status_code == 200:
+        response_list = response.json()
+        for hot_detail in response_list:
+            time.sleep(3)
+            print("Finding your hotel-----")
+            print(f"==============Details of {hot_detail.get('hotel_name', 'N/A')}===========")
+
+            print(f"\t\tHotel name: {hot_detail.get('hotel_name', 'N/A')}")
+            print(f"\t\tCity: {hot_detail.get('city', 'N/A')}")
+            print(f"\t\tDistrict: {hot_detail.get('district', 'N/A')}")
+            print(f"\t\tAddress line: {hot_detail.get('hotel_address_line', 'N/A')}")
+            print(f"\t\tAvailable rooms: {hot_detail.get('available_rooms', 'N/A')}")
+            print(f"\t\tReserved rooms: {hot_detail.get('max_rooms_in_reservation', 'N/A')}")
+            facilities = hot_detail.get('facilities_block', {})
+            facility_list = facilities.get('facilities', [])
+            # Error occured here 
+            faci_name = [facility.get("name", "N/A") for facility in facility_list]
+            print("\t\tFacilities:", ", ".join(faci_name))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     
 
