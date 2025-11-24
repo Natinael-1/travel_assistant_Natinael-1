@@ -1,4 +1,4 @@
-             ====✈️ Your Travel Assistant===
+# ====✈️Your Travel Assistant===
 
 A Python-based CLI(Command Line Interface) travel assistant that helps users discover destinations and search for hotels using real-time data from the Booking.com API (via RapidAPI).
 
@@ -10,7 +10,7 @@ Deployed one: A Load-Balanced one deployed across two servers, accessible via a 
 
 ## 📂 Project Structure
 
-```text
+
 travel_assistant_Natinael-1/
 ├── local_version_CLI/      # Contains logic for the local command-line tool
 │   ├── destinationInfo.py
@@ -37,8 +37,8 @@ Clone the repository:
 
 Bash
 
-git clone https://github.com/Natinael-1/travel_assistant_Natinael-1.git
-cd travel_assistant_Natinael-1
+git clone https://github.com/Natinael-1/travel_assistant_Natinael-1.git  
+cd travel_assistant_Natinael-1  
 Install dependencies:
 
 Bash
@@ -46,7 +46,8 @@ Bash
 pip install requests flask
 Set  API Key(Provided in the comment section on Canvas):
 
-Linux/Mac: export RAPID_BOOKING_API_KEY="api_key_here"
+Linux/Mac:   
+#### export RAPID_BOOKING_API_KEY="api_key_here"
 
 Windows: set RAPID_BOOKING_API_KEY=api_key_here
 
@@ -63,7 +64,7 @@ Note: When searching for hotels, insert the destination Id found in the
       For example, search for London or Kigali, then when searching for hotels by city,  
       put "-2601889"   for London and "-2181358" for Kigali.
 
-🌐 Part 2: Deployment (Web Architecture)
+Part 2: Deployment (Web Architecture)
 The travel assistant is deployed to a cloud infrastructure consisting  of two web servers  
 and one load balancer.
 
@@ -76,18 +77,19 @@ in the background using nohup.
 
 Domain: The domain (natiboda.tech) points to the Load Balancer's public IP.
 
-   ⁉️How to Access Remotely.
+   ## ⁉️How to Access Remotely.
 In the browser,
 
-1. Search for a City:  
-For example, details about london
+1. Search for a City
+For example, get details about London:
+https://www.natiboda.tech/city?name=London
 
+*Note: You can change `name=London` to any city you want.*
 
-[https://www.natiboda.tech/city?name=London](https://www.natiboda.tech/city?name=London)
-you can change "name" to any city you want
-2. Search for Hotels(Destination Id is provided inside the city details):
+2. Search for Hotels
+*Note: The `dest_id` is found in the city details from the previous step.*
 
-<https://www.natiboda.tech/hotels?type=city&dest_id=-3712125&arrival=2025-11-27&departure=2025-11-29>
+https://www.natiboda.tech/hotels?type=city&dest_id=-3712125&arrival=2025-11-27&departure=2025-11-29
 
        Challenges Faced & Solutions: The CLI Deployment.
 
@@ -118,3 +120,6 @@ API: Booking API via RapidAPI
 Web-infrasture used
 
 HAProxy, Nginx (for SSL), Ubuntu Servers
+
+
+
