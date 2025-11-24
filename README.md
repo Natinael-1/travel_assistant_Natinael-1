@@ -56,12 +56,13 @@ Run the main script:
 Bash
 
 python3 main.py
-Follow the on-screen prompts to search for cities or hotels by(city, district, or airport).
+Follow the on-screen prompts to search for cities or hotels by(city, district, or airport).  
+
 Note: When searching for hotels, insert the destination Id found in the destination you searched for.
-      For example, search for London or Kigali, then when searching for hotels by city, put "-2601889" for London and "-2181358" for Kigali.
+      For example, search for London or Kigali, then when searching for hotels by city, put "-2601889"   for London and "-2181358" for Kigali.
 
 🌐 Part 2: Deployment (Web Architecture)
-The travel assistant is deployed to a cloud infrastructure consisting of two web servers and one load balancer.
+The travel assistant is deployed to a cloud infrastructure consisting  of two web servers and one load balancer.
 
 Live URL: https://www.natiboda.tech
 Load Balancer (Lb-01): configured with HAProxy. It handles SSL termination (HTTPS) and distributes incoming traffic using a Round Robin algorithm.
@@ -83,15 +84,22 @@ https://www.natiboda.tech/hotels?type=city&dest_id=-3712125&arrival=2025-11-27&d
 
        Challenges Faced & Solutions: The CLI Deployment.
 
-The most significant challenge I encountered was the architectural mismatch between a Command Line Interface (CLI) and a Load Balanced Web Server.
+The most significant challenge I encountered was the architectural mismatch between a Command Line   Interface (CLI) and a Load Balanced Web Server.
 
-The Problem: My original application (main.py) relied on Python's input() function, which is designed for interactive, local terminal execution. When deployed to a web server, there is no user to run it from inside the server or I must provide my RSA private_key but that is not recommended at all. Consequently, if the application were run directly, the server would hang indefinitely waiting for input from user, causing the Load Balancer to return error.
+The Problem: My original application (main.py) relied on Python's input() function,   
+which is designed for interactive, local terminal execution.   When deployed to a web server, there is no user to run it from inside the server or   
+I must provide my RSA private_key but that is not recommended at all.  
+Consequently, if the application were run directly, the server would hang indefinitely   
+waiting for input from user, causing the Load Balancer to return error.
 
-The Solution: To satisfy the requirement of deploying and to configure the Load Balancer accordingly while preserving the nicely format output, I used Flask (main_deplo.py).
+The Solution: To satisfy the requirement of deploying and to configure the Load Balancer accordingly   while preserving the nicely format output, I used Flask (main_deplo.py).
 
-Input to parameters: I replaced input() prompts with URL query parameters (e.g., request.args.get('name')). This allows the Load Balancer to pass user input via HTTP requests.
+Input to parameters: I replaced input() prompts with URL query parameters  
+(e.g., request.args.get('name')). This allows the Load Balancer to pass user input via HTTP requests.
 
-Maintained output format: I utilized contextlib.redirect_stdout. This allowed me to format the response using print() statements to print nicely formated response for user.
+Maintained output format: I utilized contextlib.redirect_stdout.   
+This allowed me to format the response using print() statements to print nicely formated  
+response for user.
 
 This approach helped me to deploy the CLI into servers and access it via browser.
 
