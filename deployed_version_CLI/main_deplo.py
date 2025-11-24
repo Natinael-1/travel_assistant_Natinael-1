@@ -5,8 +5,8 @@ import io
 from contextlib import redirect_stdout
 
 # Import your modules
-import destinationInfo
-import hotelsInfo
+import destinations_deplo
+import hotels_deplo
 
 app = Flask(__name__)
 
@@ -40,7 +40,7 @@ def city_route():
         return "<pre>Error: Please add ?name=CityName to the URL</pre>"
     
     # Run your function and capture the output
-    output = capture_cli_output(destinationInfo.getCityInfo, city_name)
+    output = capture_cli_output(destinations_deplo.getCityInfo, city_name)
     
     # Return as plain text to keep your formatting
     return Response(output, mimetype='text/plain')
@@ -56,7 +56,7 @@ def hotels_route():
     if not d_id or not arr or not dep:
         return "<pre>Error: Missing parameters. Need dest_id, arrival, and departure.</pre>"
         
-    output = capture_cli_output(hotelsInfo.hotel_finder, s_type, d_id, arr, dep)
+    output = capture_cli_output(hotels_deplo.hotel_finder, s_type, d_id, arr, dep)
     return Response(output, mimetype='text/plain')
 
 if __name__ == '__main__':

@@ -153,8 +153,8 @@ def get_sing_hotl():
             return
         else:
             for hot_detail in response_list:
-                time.sleep(3)
                 print("Finding your hotel-----")
+                time.sleep(3) 
                 print(f"==============Details of {hot_detail.get('hotel_name', 'N/A')}===========")
 
                 print(f"\t\tHotel name: {hot_detail.get('hotel_name', 'N/A')}")
