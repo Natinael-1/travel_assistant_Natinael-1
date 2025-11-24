@@ -10,7 +10,7 @@ import hotels_deplo
 
 app = Flask(__name__)
 
-# This helper function captures your CLI print statements
+# This block is for capturing print statements
 def capture_cli_output(func, *args):
     f = io.StringIO()
     with redirect_stdout(f):
