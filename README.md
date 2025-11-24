@@ -10,7 +10,7 @@ Deployed one: A Load-Balanced one deployed across two servers, accessible via a 
 
 ## 📂 Project Structure
 
-
+```text
 travel_assistant_Natinael-1/
 ├── local_version_CLI/      # Contains logic for the local command-line tool
 │   ├── destinationInfo.py
@@ -21,6 +21,7 @@ travel_assistant_Natinael-1/
 │   └── main_deplo.py
 ├── README.md               # Documentation
 └── main.py                 # Entry point for the Local CLI
+```
 
 
        ⁉️HOW to Access Travel Assistant
