@@ -4,7 +4,7 @@ import os
 url_list = "https://apidojo-booking-v1.p.rapidapi.com/properties/v2/list"
 RAPID_BOOKING_API_KEY = os.getenv("RAPID_BOOKING_API_KEY")
 
-# MODIFIED: Accepts arguments directly
+# This block of code accepts arguements
 def hotel_finder(search_type, dest_id, arrival, departure):
     querystring = {
         "offset":"0",

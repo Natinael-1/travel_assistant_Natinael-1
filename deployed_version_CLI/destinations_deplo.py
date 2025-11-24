@@ -5,15 +5,13 @@ import time
 url_endpt = "https://apidojo-booking-v1.p.rapidapi.com/locations/auto-complete"
 RAPID_BOOKING_API_KEY = os.getenv("RAPID_BOOKING_API_KEY")
 
-# MODIFIED: Accepts city_name as argument instead of input()
+# accepting city as argument
 def getCityInfo(destination_city):
     if not destination_city:
         print("Error: No city provided.")
         return
 
     print(f"Finding destination details for {destination_city}--------")
-    # Removed sleep to make the web app faster
-    # time.sleep(1) 
 
     query_dic = {
         "text": destination_city,

@@ -4,7 +4,7 @@ import os
 import io
 from contextlib import redirect_stdout
 
-# Import your modules
+# Imported modules
 import destinations_deplo
 import hotels_deplo
 
@@ -22,7 +22,7 @@ def capture_cli_output(func, *args):
 
 @app.route('/')
 def home():
-    # Only showing basic instructions here
+    # This lines show instructions to users(how to use an app)
     return """
     <pre>
     Welcome to the Travel Assistant CLI (Web Version)
@@ -39,15 +39,13 @@ def city_route():
     if not city_name:
         return "<pre>Error: Please add ?name=CityName to the URL</pre>"
     
-    # Run your function and capture the output
+    # calling getCityInfo function to get city details
     output = capture_cli_output(destinations_deplo.getCityInfo, city_name)
-    
-    # Return as plain text to keep your formatting
     return Response(output, mimetype='text/plain')
 
 @app.route('/hotels')
 def hotels_route():
-    # Get parameters from URL
+    # Getting parameters from URL
     s_type = request.args.get('type', 'city')
     d_id = request.args.get('dest_id')
     arr = request.args.get('arrival')
