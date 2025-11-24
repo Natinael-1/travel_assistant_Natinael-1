@@ -79,13 +79,15 @@ Domain: The domain (natiboda.tech) points to the Load Balancer's public IP.
    ⁉️How to Access Remotely.
 In the browser,
 
-1. Search for a City:
+1. Search for a City:  
+For example, details about london
 
-https://www.natiboda.tech/city?name=London
+
+[https://www.natiboda.tech/city?name=London](https://www.natiboda.tech/city?name=London)
 you can change "name" to any city you want
 2. Search for Hotels(Destination Id is provided inside the city details):
 
-https://www.natiboda.tech/hotels?type=city&dest_id=-3712125&arrival=2025-11-27&departure=2025-11-29
+<https://www.natiboda.tech/hotels?type=city&dest_id=-3712125&arrival=2025-11-27&departure=2025-11-29>
 
        Challenges Faced & Solutions: The CLI Deployment.
 
